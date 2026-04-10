@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: visa_platform_db
+    environment:
+      POSTGRES_DB: visa_platform
+      POSTGRES_USER: visa_admin
+      POSTGRES_PASSWORD: visa_secret_2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U visa_admin -d visa_platform"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
